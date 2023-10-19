@@ -45,7 +45,7 @@ public class CarController : MonoBehaviour
             AdjustCarSpeed(-deceleration * KMPH_TO_MPS * Time.deltaTime);
         }
         //brake
-        if (Input.GetKey(KeyCode.DownArrow))
+        if (Input.GetKey(KeyCode.Space))
         {
             AdjustCarSpeed(-brake * KMPH_TO_MPS * Time.deltaTime);
         }
@@ -84,7 +84,7 @@ public class CarController : MonoBehaviour
 
         if(currentSpeed > 30 * KMPH_TO_MPS)
         {
-            AdjustCarSpeed(-turnDecelration + KMPH_TO_MPS * Time.deltaTime);
+            AdjustCarSpeed(-turnDecelration * KMPH_TO_MPS * Time.deltaTime);
         }
     }
 }
