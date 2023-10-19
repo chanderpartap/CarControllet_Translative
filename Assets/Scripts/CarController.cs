@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CarController : MonoBehaviour
 {
+    #region PUBLICS
+    [Header("Car Control Variables (in Km/Hr)")]
     //Max speed of car
     public float maxSpeed = 200f;
     public float acceleration = 20f;
@@ -11,16 +13,18 @@ public class CarController : MonoBehaviour
 
     public float brake = 60f;
 
-    public float turnDecelration = 30f;
+    public float turnDecelration = 15f;
 
     public float steerSpeed = 70f;
+    #endregion
 
+    #region PRIVATES
     Transform rightAxis, leftAxis;
 
     float currentSpeed = 0;
     //to convert Km/h -> m/s
     const float KMPH_TO_MPS = 0.278f;
-
+    #endregion
     // Start is called before the first frame update
     void Start()
     {
@@ -34,34 +38,33 @@ public class CarController : MonoBehaviour
         //accelerate
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            AdjustSpeed(acceleration * KMPH_TO_MPS * Time.deltaTime);
+            AdjustCarSpeed(acceleration * KMPH_TO_MPS * Time.deltaTime);
         }
         else
         {
-            AdjustSpeed(-deceleration * KMPH_TO_MPS * Time.deltaTime);
+            AdjustCarSpeed(-deceleration * KMPH_TO_MPS * Time.deltaTime);
         }
         //brake
         if (Input.GetKey(KeyCode.DownArrow))
         {
-            AdjustSpeed(-brake * KMPH_TO_MPS * Time.deltaTime);
+            AdjustCarSpeed(-brake * KMPH_TO_MPS * Time.deltaTime);
         }
         //left steer
         if(Input.GetKey(KeyCode.LeftArrow) && currentSpeed > 5 * KMPH_TO_MPS)
         {
-            AdjustSteering(-steerSpeed, leftAxis.position);
+            AdjustCarSteering(-steerSpeed, leftAxis.position);
         }
         //right steer
         if(Input.GetKey(KeyCode.RightArrow) && currentSpeed > 5 * KMPH_TO_MPS)
         {
-            AdjustSteering(steerSpeed, rightAxis.position);
+            AdjustCarSteering(steerSpeed, rightAxis.position);
         }
 
         //perform Movement
         transform.Translate(0, 0, currentSpeed * Time.deltaTime);
         Debug.Log(currentSpeed);
     }
-
-    void AdjustSpeed(float newSpeed)
+    void AdjustCarSpeed(float newSpeed)
     {
         currentSpeed += newSpeed;
         if(currentSpeed > maxSpeed * KMPH_TO_MPS)
@@ -75,13 +78,13 @@ public class CarController : MonoBehaviour
         }
     }
 
-    void AdjustSteering(float speed, Vector3 rotationAxis)
+    void AdjustCarSteering(float speed, Vector3 rotationAxis)
     {
         transform.RotateAround(rotationAxis, Vector3.up, speed * Time.deltaTime);
 
         if(currentSpeed > 30 * KMPH_TO_MPS)
         {
-            AdjustSpeed(-turnDecelration + KMPH_TO_MPS * Time.deltaTime);
+            AdjustCarSpeed(-turnDecelration + KMPH_TO_MPS * Time.deltaTime);
         }
     }
 }
