@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class CarCamera : MonoBehaviour
 {
+    [Header("Camera Controls")]
     public Transform car;
-
     public float height = 4;
     public float zDistance = 10f;
     public float turnTimeout = 0.25f;
     public float camRotation = 50;
+    //flag
     float angleChangeTime = -1;
     // Start is called before the first frame update
     void Start()
